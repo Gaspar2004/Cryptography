@@ -3,7 +3,7 @@ from cryptography.fernet import Fernet
 
 files=[]
 for file in os.listdir():
-    if file=="Encriptador.py" or file=="thekey.key" or file=="Desencriptador.py":
+    if  file=="thekey.key" or file=="Desencriptador.py":
         continue 
     if os.path.isfile(file):
         files.append(file)

