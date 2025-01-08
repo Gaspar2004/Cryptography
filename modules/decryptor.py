@@ -37,3 +37,6 @@ def decrypt_folder(folder_path, password):
             return f"Error: Contraseña incorrecta para el archivo {file}."
 
     return "Desencriptación completada."
+
+
+
