@@ -22,7 +22,7 @@ password = getpass("Introduce la contraseña para desencriptar los archivos: ")
 key = derive_key_from_password(password)
 
 # Ignorar ciertos archivos
-ignored_files = {"Desencriptador_sin_salt.py","creador_de_diccionario.py","diccionario_generado.txt","Encriptador_sin_salt.py","Fuerza_Bruta.py"}
+ignored_files= {"Encriptador_sin_salt.py", "Desencriptador_sin_salt.py","creador_de_diccionario.py","diccionario_generado.txt","Fuerza_Bruta.py","Desencriptador.py","Encriptador.py"}
 #Lista de todos los archivos, es útil si queda encriptado algo por accidente
 all_files={"Desencriptador_sin_salt.py","creador_de_diccionario.py","diccionario_generado.txt","Desencriptador.py","elperro.txt","Encriptador_sin_salt.py","Encriptador.py","Fuerza_Bruta.py","thekey.key"}
 # Lista de archivos para desencriptar

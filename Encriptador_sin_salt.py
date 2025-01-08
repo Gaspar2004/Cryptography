@@ -22,7 +22,7 @@ key = derive_key_from_password(password)
 
 # Ignorar ciertos archivos
 script_name = os.path.basename(__file__)
-ignored_files = {"Encriptador_sin_salt.py", "Desencriptador_sin_salt.py","creador_de_diccionario.py","diccionario_generado.txt","Fuerza_Bruta.py"}
+ignored_files = {"Encriptador_sin_salt.py", "Desencriptador_sin_salt.py","creador_de_diccionario.py","diccionario_generado.txt","Fuerza_Bruta.py","Desencriptador.py","Encriptador.py"}
 
 # Lista de archivos para encriptar
 files = []
