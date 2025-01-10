@@ -21,7 +21,7 @@ def derive_key_from_password(password):
 # Ruta al archivo a desencriptar
 encrypted_file = "elperro.txt"  # Reemplaza con el archivo que deseas atacar
 dictionary_file = "diccionario_generado.txt"  # Archivo con posibles contraseñas, una por línea
-ignored_files=
+ignored_files={}
 start_time = time.time()
 # Verificar que el archivo cifrado existe
 if not os.path.exists(encrypted_file):
