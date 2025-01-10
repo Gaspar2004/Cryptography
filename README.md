@@ -1,7 +1,13 @@
 # Proyecto de Encriptador y Desencriptador
 
 ## Descripción
-Este proyecto consiste en dos scripts de Python que permiten encriptar y desencriptar archivos utilizando una contraseña personalizada. La encriptación se realiza con el algoritmo de cifrado simétrico **Fernet**, proporcionado por la biblioteca `cryptography`. Además, los scripts garantizan la seguridad al derivar la clave de cifrado de una contraseña introducida por el usuario y un `salt` único.
+Este proyecto es una aplicación gráfica para encriptar y desencriptar archivos utilizando el algoritmo Fernet de la biblioteca Cryptography. También incluye una funcionalidad de ataque de fuerza bruta para intentar descifrar archivos encriptados sin conocer la contraseña.
+
+La aplicación cuenta con una interfaz gráfica de usuario (GUI) desarrollada con Tkinter, permitiendo al usuario interactuar de manera sencilla para realizar las siguientes operaciones:
+
+Encriptar todo el contenido de una carpeta.
+Desencriptar todo el contenido de una carpeta.
+Realizar un ataque de fuerza bruta para descifrar archivos encriptados utilizando un diccionario de contraseñas.
 
 ### Scripts Incluidos
 1. **Encriptador.py**: Encripta todos los archivos en el directorio excepto el propio script, el archivo de clave y el script del desencriptador.
@@ -15,6 +21,8 @@ Asegúrate de tener instaladas las siguientes dependencias antes de ejecutar los
 
 - Python 3.6 o superior
 - Biblioteca `cryptography`
+- tkinter (viene con Python por defecto)
+
 
 Puedes instalar la dependencia usando el siguiente comando:
 
@@ -23,109 +31,69 @@ pip install cryptography
 ```
 
 ---
+## Características Principales
 
-## Uso
+# 1. Encriptar Carpeta
+Esta funcionalidad permite encriptar todo el contenido de una carpeta seleccionada. Los archivos encriptados se sobrescriben en su ubicación original.
 
-### Encriptador
-#### Propósito
-El script **Encriptador.py** encripta todos los archivos del directorio actual, incluyendo el propio script, utilizando una contraseña proporcionada por el usuario.
+Interfaz:
 
-#### Ejecución
-1. Coloca el archivo `Encriptador.py` en el directorio donde se encuentran los archivos que deseas encriptar.
-2. Ejecuta el script:
+Botón para seleccionar la carpeta a encriptar.
+Solicitud de contraseña mediante un cuadro de diálogo gráfico.
+Mensajes de éxito o error.
+Implementación:
 
-   ```bash
-   python Encriptador.py
-   ```
+Algoritmo: Fernet.
+Derivación de clave mediante PBKDF2 con SHA-256 (con salt).
 
-3. Introduce una contraseña cuando se te solicite. Esta contraseña se usará para derivar la clave de encriptación.
-4. El script generará un archivo `thekey.key` que contiene el `salt` necesario para derivar la clave.
-5. Todos los archivos en el directorio serán encriptados, incluyendo el script mismo.
+# 2. Desencriptar Carpeta
+Esta funcionalidad permite desencriptar todo el contenido de una carpeta seleccionada. Los archivos desencriptados se sobrescriben en su ubicación original.
 
----
+Interfaz:
 
-### Desencriptador
-#### Propósito
-El script **Desencriptador.py** desencripta los archivos previamente encriptados, utilizando la misma contraseña que se empleó durante la encriptación.
+Botón para seleccionar la carpeta a desencriptar.
+Solicitud de contraseña mediante un cuadro de diálogo gráfico.
+Mensajes de éxito o error.
+Implementación:
 
-#### Ejecución
-1. Coloca el archivo `Desencriptador.py` en el mismo directorio donde se encuentran los archivos encriptados.
-2. Asegúrate de que el archivo `thekey.key` esté presente en el directorio.
-3. Ejecuta el script:
+Algoritmo: Fernet.
+Derivación de clave mediante PBKDF2 con SHA-256 (con salt).
 
-   ```bash
-   python Desencriptador.py
-   ```
+# 3. Ataque de Fuerza Bruta
+Permite intentar descifrar un archivo encriptado probando contraseñas desde un diccionario.
 
-4. Introduce la contraseña utilizada durante la encriptación.
-5. Los archivos serán desencriptados y restaurados a su estado original.
+Interfaz:
 
----
+Selección del archivo encriptado.
+Selección del archivo de diccionario.
+Botón para iniciar el ataque.
+Mensajes informativos sobre el resultado del ataque.
+Implementación:
 
-## Detalles Técnicos
+Derivación de clave mediante PBKDF2 con SHA-256 (sin salt en este caso).
+Gestión de errores cuando la contraseña es incorrecta.
 
-### Encriptación
-- El script utiliza el algoritmo **Fernet** de la biblioteca `cryptography`.
-- La clave de encriptación se deriva a partir de la contraseña del usuario mediante el algoritmo **PBKDF2** con los siguientes parámetros:
-  - Algoritmo hash: SHA-256
-  - Longitud de clave: 32 bytes
-  - Iteraciones: 100,000
-  - Salt: 16 bytes generado aleatoriamente
+## Cómo Usar la Aplicación
+#Paso 1: Ejecución
+Ejecuta el archivo principal:
 
-### Seguridad
-- El `salt` se almacena en el archivo `thekey.key`, lo que permite derivar la clave de encriptación/desencriptación en el futuro.
-- La contraseña nunca se almacena directamente; solo se utiliza para derivar la clave.
-
----
-
-## Precauciones
-- **Respalda tus archivos**: Antes de usar el script, realiza una copia de seguridad de los archivos, ya que la pérdida de la contraseña o el archivo `thekey.key` hará que los datos sean irrecuperables.
-- **Mantén segura la clave**: El archivo `thekey.key` y la contraseña son necesarios para desencriptar los archivos. No los compartas ni los pierdas.
-- **Evita interrupciones**: Asegúrate de que el proceso de encriptación/desencriptación no sea interrumpido para evitar corrupciones en los archivos.
-
----
-
-## Estructura del Proyecto
+```bash
+python main.py
 ```
-├── Encriptador.py
-├── Desencriptador.py
-├── thekey.key (se genera después de ejecutar el Encriptador.py)
-├── README.md
-└── Archivos a encriptar
-```
+# Paso 2: Pantalla Principal
+Desde la pantalla principal puedes:
 
----
+Seleccionar "Encriptar Carpeta" para encriptar todos los archivos de una carpeta.
+Seleccionar "Desencriptar Carpeta" para desencriptar todos los archivos de una carpeta.
+Seleccionar "Ataque Fuerza Bruta" para intentar descifrar un archivo encriptado.
 
-## Ejemplo de Ejecución
-### Encriptador
-```
-$ python Encriptador.py
-Introduce una contraseña para encriptar los archivos: ********
-Archivos encriptados con éxito.
-```
+# Paso 3: Opciones de Encriptar/Desencriptar
+Selecciona la carpeta que deseas encriptar/desencriptar.
+Introduce una contraseña cuando se solicite.
+Espera a que el proceso termine. Se mostrará un mensaje indicando el resultado.
 
-### Desencriptador
-```
-$ python Desencriptador.py
-Introduce la contraseña para desencriptar los archivos: ********
-Archivos desencriptados con éxito.
-```
-
----
-
-## Posibles Errores y Soluciones
-
-1. **Error: Archivo `thekey.key` no encontrado**
-   - Asegúrate de que el archivo `thekey.key` esté en el mismo directorio que los archivos encriptados.
-
-2. **Error: Contraseña incorrecta**
-   - Introduce la misma contraseña que usaste para encriptar los archivos. Si la contraseña es incorrecta, la desencriptación fallará.
-
-3. **Error: Archivos corruptos después de interrupción**
-   - Asegúrate de no interrumpir la ejecución del script para evitar corrupciones. Respalda los archivos antes de ejecutar los scripts.
-
----
-
-## Licencia
-Este proyecto se distribuye bajo la Licencia MIT. Puedes usarlo, modificarlo y distribuirlo libremente, siempre que se otorgue crédito al autor original.
-
+# Paso 4: Ataque de Fuerza Bruta
+Selecciona el archivo encriptado que deseas descifrar.
+Selecciona el archivo de diccionario con las posibles contraseñas.
+Inicia el ataque.
+Si se encuentra una contraseña válida, se mostrará en pantalla.
