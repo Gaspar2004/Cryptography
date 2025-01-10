@@ -39,10 +39,10 @@ class EncryptionOptionsScreen:
                 use_salt = self.use_salt.get() == 1
 
                 # Elegir la función según la opción de usar salt o no
-                if use_salt:
-                    message = encrypt_folder(folder_path, password, include_subfolders)
-                else:
-                    message = encrypt_folder_no_salt(folder_path, password, include_subfolders)
+                #if use_salt:
+                message = encrypt_folder(folder_path, password, include_subfolders)
+                #else:
+                #    message = encrypt_folder_no_salt(folder_path, password, include_subfolders)
 
                 # Mostrar el resultado al usuario
                 messagebox.showinfo("Resultado", message)
